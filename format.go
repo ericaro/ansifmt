@@ -1,3 +1,4 @@
+//Package ansifmt deals with ansi escape code and there associated format.
 package ansifmt
 
 import (
