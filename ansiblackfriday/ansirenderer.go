@@ -1,5 +1,5 @@
 //renderer for russross's Blackfriday markdown processor.
-package renderer
+package ansiblackfriday
 
 import (
 	"bytes"
