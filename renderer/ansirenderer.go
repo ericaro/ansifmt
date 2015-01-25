@@ -1,3 +1,4 @@
+//renderer for russross's Blackfriday markdown processor.
 package renderer
 
 import (
@@ -68,7 +69,7 @@ func (d *ansirenderer) Header(out *bytes.Buffer, text func() bool, level int, id
 	title := out.String() //by convention, I don't write useless line break in the title.
 	title = ansifmt.ToTitle(title)
 	out.Reset()
-	block := IndentText(title, level-1, d.maxcols)
+	block := indentText(title, level-1, d.maxcols)
 	h := strings.Repeat(" ", level-1)
 	// log.Printf("indent(%q,%v,%v)-> %q", title, level-1, d.maxcols, block)
 	fmt.Fprintf(d.doc, "\n%s%s\n\n", h, d.em1(block))
@@ -83,7 +84,7 @@ func (d *ansirenderer) Paragraph(out *bytes.Buffer, text func() bool) {
 
 	h := strings.Repeat(" ", 4)
 
-	fmt.Fprintf(d.doc, "\n%s%s\n", h, IndentText(par, 4, d.maxcols))
+	fmt.Fprintf(d.doc, "\n%s%s\n", h, indentText(par, 4, d.maxcols))
 
 }
 
@@ -124,7 +125,7 @@ func (d *ansirenderer) ListItem(out *bytes.Buffer, text []byte, flags int) {
 	}
 
 	i := 4 + d.listdepth*4
-	block := IndentText(string(text), i, d.maxcols) //not really d.maxcols depends on the list depth
+	block := indentText(string(text), i, d.maxcols) //not really d.maxcols depends on the list depth
 	// now I need to put the bullet in the right place
 	h := strings.Repeat(" ", d.listdepth*4)
 	fmt.Fprintf(out, "%s%s%s\n", h, bullet, block)
@@ -209,8 +210,8 @@ func (d *ansirenderer) Table(out *bytes.Buffer, header []byte, body []byte, cd [
 func (d *ansirenderer) BlockQuote(out *bytes.Buffer, text []byte)                     { /*ignored */ }
 func (d *ansirenderer) BlockHtml(out *bytes.Buffer, text []byte)                      { /*ignored */ }
 
-//IndentText will break the txt into sm
-func IndentText(txt string, indent, length int) string {
+//indentText will break the txt into sm
+func indentText(txt string, indent, length int) string {
 	out := new(bytes.Buffer)
 	h := "\n" + strings.Repeat(" ", indent)
 	for i, line := range ansifmt.LineWrap(txt, length-indent-1) {
