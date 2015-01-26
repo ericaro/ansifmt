@@ -124,10 +124,10 @@ func (d *ansirenderer) ListItem(out *bytes.Buffer, text []byte, flags int) {
 		}
 	}
 
-	i := 4 + d.listdepth*4
-	block := indentText(string(text), i, d.maxcols) //not really d.maxcols depends on the list depth
+	i := 4 //+ d.listdepth*4
+	block := indentText(string(text), i, d.maxcols)
 	// now I need to put the bullet in the right place
-	h := strings.Repeat(" ", d.listdepth*4)
+	h := strings.Repeat(" ", 4) //d.listdepth*4)
 	fmt.Fprintf(out, "%s%s%s\n", h, bullet, block)
 }
 
@@ -135,6 +135,7 @@ func (d *ansirenderer) BlockCode(out *bytes.Buffer, text []byte, lang string) {
 	txt := string(text)
 	//indent it
 
+	fmt.Fprintln(d.doc)
 	for _, line := range strings.Split(txt, "\n") {
 		fmt.Fprintf(d.doc, "        %s\n", d.code(line))
 	}
@@ -212,9 +213,10 @@ func (d *ansirenderer) BlockHtml(out *bytes.Buffer, text []byte)                
 
 //indentText will break the txt into sm
 func indentText(txt string, indent, length int) string {
+
 	out := new(bytes.Buffer)
-	h := "\n" + strings.Repeat(" ", indent)
-	for i, line := range ansifmt.LineWrap(txt, length-indent-1) {
+	for i, line := range ansifmt.LineWrap(txt, length-indent-4) {
+		h := "\n" + strings.Repeat(" ", indent)
 		if i > 0 {
 			out.WriteString(h)
 		}

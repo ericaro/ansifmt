@@ -50,10 +50,16 @@ func LineWrap(txt string, length int) (lines []string) {
 	for tok := s.Next(); true; tok = s.Next() { //loop over all the text
 		//wordlength should be inc, only if this is a visible char
 		// in particular, if I'm in an ansi escape sequence \x1b[0;0;m that's a lot of char "unvisible"
-		if tok != scanner.EOF {
+		if tok != scanner.EOF && tok != '\n' {
 			word.WriteRune(tok)
 		}
 		switch {
+		case tok == '\n':
+			word.WriteTo(line)
+			lines = append(lines, line.String())
+			line.Reset()
+			linelength = 0
+			wordlength = 0
 		case inescape: // we are in escape mod
 			//just check if we should get out
 			if tok == 'm' { // en of it
@@ -73,7 +79,7 @@ func LineWrap(txt string, length int) (lines []string) {
 
 				if (tok != scanner.EOF && linelength > 0) || (tok == scanner.EOF && linelength+wordlength >= length) { //we can use the line alone, just do it
 					//flush and add
-					lines = append(lines, strings.TrimSpace(line.String()))
+					lines = append(lines, line.String())
 					line.Reset()
 					linelength = 0
 
@@ -84,7 +90,7 @@ func LineWrap(txt string, length int) (lines []string) {
 				} else { //unfortunately the current is empty so we can't use it
 					//so we use the word despite beeing too big
 					word.WriteTo(line)
-					lines = append(lines, strings.TrimSpace(line.String()))
+					lines = append(lines, line.String())
 					line.Reset()
 					linelength = 0
 					wordlength = 0

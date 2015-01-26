@@ -24,3 +24,9 @@ func ExampleIndentText_Singleline() {
 	fmt.Printf("%q", txt)
 	//Output: "List Support"
 }
+
+func ExampleIndentText_List() {
+	txt := indentText("nest with \x1b[1mtriple\x1b[0m  emphasis", 16, 130)
+	fmt.Printf("%q", txt)
+	//Output: "nest with \x1b[1mtriple\x1b[0m  emphasis"
+}
