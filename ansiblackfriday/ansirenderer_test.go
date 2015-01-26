@@ -5,18 +5,9 @@ import "fmt"
 func ExampleIndentText() {
 	txt := indentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus scelerisque a purus et sagittis. Cras odio tellus, maximus non nunc.", 2, 20)
 	//txt := IndentText("Lorem ipsum dolor sit amet, consectetur", 2, 20)
-	fmt.Printf("%s", txt)
-	//Output:Lorem ipsum
-	//   dolor sit amet,
-	//   consectetur
-	//   adipiscing elit.
-	//   Phasellus
-	//   scelerisque a
-	//   purus et
-	//   sagittis. Cras
-	//   odio tellus,
-	//   maximus non
-	//   nunc.
+	fmt.Printf("%q", txt)
+	//Output: "Lorem ipsum \n  dolor sit \n  amet, \n  consectetur \n  adipiscing \n  elit. \n  Phasellus \n  scelerisque \n  a purus et \n  sagittis. \n  Cras odio \n  tellus, \n  maximus non \n  nunc."
+
 }
 
 func ExampleIndentText_Singleline() {
