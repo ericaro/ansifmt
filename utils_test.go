@@ -9,9 +9,9 @@ func ExampleLineWrap_Simple() {
 		fmt.Printf("%v: %q\n", i, line)
 	}
 	//Output:
-	//0: "toto"
-	//1: "is a"
-	//2: "weird"
+	//0: "toto "
+	//1: "is a "
+	//2: "weird "
 	//3: "person"
 
 }
@@ -22,9 +22,9 @@ func ExampleLineWrap() {
 		fmt.Printf("%v: %q\n", i, line)
 	}
 	//Output:
-	//0: "toto"
-	//1: "\x1b[1mis\x1b[0m a"
-	//2: "weird"
+	//0: "toto "
+	//1: "\x1b[1mis\x1b[0m a "
+	//2: "weird "
 	//3: "person"
 
 }
